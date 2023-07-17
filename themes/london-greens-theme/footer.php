@@ -1,11 +1,20 @@
 <footer>
-  <div class="holdFooterNav">
-    <?php
-      wp_nav_menu( array(
-        'theme_location' => 'footer-nav',
-        'container_class' => 'footer-nav' ) );
-        ?>
-</div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-6">
+        <h2>Navigation</h2>
+        <?php
+          wp_nav_menu( array(
+            'theme_location' => 'footer-nav',
+            'container_class' => 'footer-nav' ) );
+            ?>
+        </div>
+      <div class="col-sm-12 col-md-6">
+        <h2>Contact Us</h2>
+      <a href="mailto:Londonnorthcentre@gpo.ca">Londonnorthcentre@gpo.ca</a>
+      </div>
+    </div>
+  </div>
 </footer>
 
 </div>

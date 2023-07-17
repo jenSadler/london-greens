@@ -285,11 +285,19 @@ class UCMM_WPBrigade_Entities {
       'type'					=> 'option',
       'capability'		=> 'manage_options',
       'transport'     => 'postMessage',
-      'sanitize_callback' => 'sanitize_text_field',
+      'sanitize_callback' => 'wp_kses_post',
     ) );
 
+	/**
+	 * Add the subheading textarea.
+	 *
+	 * @since 1.0.0
+	 * @version 1.4.1
+	 */
     $wp_customize->add_control( 'ucmm_wpbrigade_customization[footer_text]', array(
       'label'		=> __( 'Subheading Text', 'ucmm-wpbrigade'),
+      'description'	=> __( 'A new experience. You can use HTML tags here.', 'ucmm-wpbrigade' ),
+      'type'		=> 'textarea',
       'section'		=> 'ucmm_wpbrigade_text_section',
       'priority'	=> 10,
       'settings'	=> "ucmm_wpbrigade_customization[footer_text]"

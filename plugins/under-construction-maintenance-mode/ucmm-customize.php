@@ -136,6 +136,9 @@ foreach ( $social_network as $key => $value ) {
 		margin: 0;
 		font-family: inherit;
 	}
+	h2 a{
+		color: inherit;
+	}
 	.footer-love {
 		position: absolute;
 		color: #fff;
@@ -258,7 +261,7 @@ foreach ( $social_network as $key => $value ) {
 		<h2>
 		<?php
 		if ( isset( $ucmm_footer ) ) {
-			echo $ucmm_footer;
+			echo wp_kses_post( $ucmm_footer );
 		} else{
 			echo __( 'We are working hard to bring you new experience!', 'ucmm-wpbrigade' );
 

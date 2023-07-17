@@ -32,6 +32,7 @@
   }
   .section-content {
     padding: 15px;
+    overflow: hidden;
   }
 
   .dashboard-section-1 {
@@ -60,6 +61,37 @@
       }
     }
     .info-box-1 {
+      .section-title {
+        .llar-premium-label {
+          float: right;
+          color: #797777;
+          font-weight: 400;
+
+          .dashicons {
+            color: #66cc66;
+            margin-right: 2px;
+          }
+        }
+
+        @media all and (max-width: 1340px) {
+          padding: 15px 10px;
+
+          .llar-premium-label {
+            font-size: 12px;
+          }
+        }
+
+        @media all and (max-width: 1220px) {
+          .llar-premium-label {
+            display: block;
+            margin-top: 5px;
+            float: none;
+          }
+        }
+      }
+      .section-content {
+        clear: both;
+      }
       .chart {
         //margin-bottom: 10px;
         max-width: 300px;
@@ -68,6 +100,13 @@
         margin-bottom: 15px;
         margin-left: auto;
         margin-right: auto;
+
+        .doughnut-chart-wrap {
+          position: relative;
+          width: 150px;
+          height: auto;
+          margin: 0 auto;
+        }
 
         .llar-retries-count {
           position: absolute;
@@ -331,6 +370,14 @@
         font-weight: 400;
         margin-top: 5px;
         margin-bottom: 0;
+        float: left;
+      }
+      .countries-table-info-right {
+        color: #2271b1;
+        font-weight: 400;
+        margin-top: 5px;
+        margin-bottom: 0;
+        float: right;
       }
     }
     .info-box-2 {

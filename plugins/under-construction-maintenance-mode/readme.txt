@@ -4,8 +4,8 @@ Author URI: https://wpbrigade.com/?utm_source=ucmm-org&utm_medium=author-url-lin
 Donate link: Author URI: https://wpbrigade.com/?utm_source=ucmm-org&utm_medium=donate-url-link
 Tags: coming soon, under construction, maintenance mode, behind the scenes, maintenance, comingsoon,
 Requires at least: 5.0
-Tested up to: 5.8
-Stable tag: 1.3.1
+Tested up to: 6.2
+Stable tag: 1.4.2
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -94,8 +94,20 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= 1.4.2 - 2023-04-03 =
+* Enhancement: Created the .pot file.
+* Compatibility: Compatible with WordPress 6.2
+* Compatibility: Compatible with PHP 8.1
+
+= 1.4.1 - 2023-02-20 =
+* Enhancement: A new experience. Add HTML tags under the sub-heading area.
+
+= 1.4.0 - 2023-01-12 =
+* Enhancement: Added a filter `ucmm_exclude_post` to exclude the specific post/pages from the UCMM.
+* Compatibility: Compatible with WordPress 6.1
+
 = 1.3.1 - 2021-10-04 =
-* Bug Fix: library PHP warning fix.
+* Bug Fix: PHP warning fix.
 
 = 1.3.0 - 2021-10-04 =
 * Bug Fix: Apply sanitization on social links.
@@ -184,5 +196,5 @@ This section describes how to install the plugin and get it working.
 
 == Upgrade Notice ==
 
-= 1.3.1 =
+= 1.4.2 =
 Upgrade Immediately

@@ -22,7 +22,9 @@
     <a class="navbar-brand" href="<?php echo get_home_url(); ?>">London Greens</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#bs-example-navbar-collapse-1" aria-controls="bs-example-navbar-collapse-1" aria-expanded="false" aria-label="<?php esc_attr_e( 'Toggle navigation', 'your-theme-slug' ); ?>">
     <span class="navbar-toggler-icon"></span>
+    
 </button>
+
         <?php
         wp_nav_menu( array(
             'theme_location'    => 'main-nav',
@@ -35,7 +37,7 @@
             'walker'            => new WP_Bootstrap_Navwalker(),
         ) );
         ?>
-
+        
 
     </div>
 </nav>

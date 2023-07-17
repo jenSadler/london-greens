@@ -84,6 +84,10 @@ class Uploads_Manager extends Base_Object {
 		// Returns an array of file paths.
 		$extracted = $zip_handler->extract( $file_path, $allowed_file_types );
 
+		if ( is_wp_error( $extracted ) ) {
+			return $extracted;
+		}
+
 		// If there are no extracted file names, no files passed the extraction validation.
 		if ( empty( $extracted['files'] ) ) {
 			// TODO: Decide what to do if no files passed the extraction validation
@@ -273,6 +277,17 @@ class Uploads_Manager extends Base_Object {
 	public function create_temp_file( $file_content, $file_name ) {
 		$temp_filename = $this->create_unique_dir() . $file_name;
 
+		/**
+		 * Temp File Path
+		 *
+		 * Allows modifying the full path of the temporary file.
+		 *
+		 * @since 3.7.0
+		 *
+		 * @param string full path to file
+		 */
+		$temp_filename = apply_filters( 'elementor/files/temp-file-path', $temp_filename );
+
 		file_put_contents( $temp_filename, $file_content ); // phpcs:ignore
 
 		return $temp_filename;
@@ -292,7 +307,18 @@ class Uploads_Manager extends Base_Object {
 		if ( ! $this->temp_dir ) {
 			$wp_upload_dir = wp_upload_dir();
 
-			$this->temp_dir = implode( DIRECTORY_SEPARATOR, [ $wp_upload_dir['basedir'], 'elementor', 'tmp' ] ) . DIRECTORY_SEPARATOR;
+			$temp_dir = implode( DIRECTORY_SEPARATOR, [ $wp_upload_dir['basedir'], 'elementor', 'tmp' ] ) . DIRECTORY_SEPARATOR;
+
+			/**
+			 * Temp File Path
+			 *
+			 * Allows modifying the full path of the temporary file.
+			 *
+			 * @since 3.7.0
+			 *
+			 * @param string temporary directory
+			 */
+			$this->temp_dir = apply_filters( 'elementor/files/temp-dir', $temp_dir );
 
 			if ( ! is_dir( $this->temp_dir ) ) {
 				wp_mkdir_p( $this->temp_dir );
@@ -405,11 +431,11 @@ class Uploads_Manager extends Base_Object {
 	 * Library.
 	 *
 	 * @since 3.5.0
-	 * @access private
+	 * @access public
 	 *
 	 * @return bool
 	 */
-	private function is_elementor_media_upload() {
+	public function is_elementor_media_upload() {
 		// Sometimes `uploadTypeCaller` passed as a GET parameter when using the WP Media Library REST API, where the
 		// whole request body is occupied by the uploaded file.
 		return isset( $_REQUEST['uploadTypeCaller'] ) && 'elementor-media-upload' === $_REQUEST['uploadTypeCaller']; // phpcs:ignore
@@ -557,7 +583,16 @@ class Uploads_Manager extends Base_Object {
 			$is_allowed = new \WP_Error( Exceptions::FORBIDDEN, 'Uploading this file type is not allowed.' );
 		}
 
-		return $is_allowed;
+		/**
+		 * Elementor File Type Allowed
+		 *
+		 * Allows setting file types
+		 *
+		 * @since 3.5.0
+		 *
+		 * @param bool|\WP_Error $is_allowed
+		 */
+		return apply_filters( 'elementor/files/allow-file-type/' . $file_extension, $is_allowed );
 	}
 
 	/**

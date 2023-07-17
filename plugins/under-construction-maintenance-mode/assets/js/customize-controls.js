@@ -45,10 +45,11 @@
         wp.customize("ucmm_wpbrigade_customization[footer_text]", function(value) {
             value.bind(function(newval) {
                 if ("" != newval) {
+					const output = newval.replace(/<script>/g, "");
                     $("#customize-preview iframe")
                         .contents()
                         .find(".ucmm-logo h2")
-                        .html(newval)
+                        .html(output)
                 } else {
                     $("#customize-preview iframe")
                         .contents()
@@ -219,7 +220,7 @@
                 if ('' !== newval) {
                     $("#customize-preview iframe")
                         .contents()
-                        .find("h2")
+                        .find("h2, h2 a")
                         .css({ color: newval });
                 }
             });

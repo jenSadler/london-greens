@@ -27,21 +27,7 @@
 			 
 				<div class="col-sm-12 col-md-6 col-lg-5 col-xl-4">
 				
-					<div class="partyBoxContainer">
-						<div class="partyBox">
-							<?php dynamic_sidebar( 'on-widgets' ); ?>
-						</div>
-					</div>
-					<?php dynamic_sidebar( 'cta-widget' ); ?>
-					
-					<div class="partyBoxContainer">
-						
-
-						<div class="partyBox">
-							<?php dynamic_sidebar( 'can-widgets' ); ?>
-						</div>
-
-				 </div>
+        <?php get_sidebar();?>
            
 
             </div>

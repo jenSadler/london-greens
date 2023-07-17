@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Under Construction & Maintenance Mode
- * Plugin URI: https://wpbrigade.com/wordpress/plugins/under-construction-maintenance-mode/
+ * Plugin URI: https://wpbrigade.com/wordpress/plugins/under-construction-maintenance-mode/?utm_source=ucmm-org&utm_medium=plugin-url-link
  * Description: This plugin will Display an Under Construction, Maintenance Mode or Coming Soon landing Page that takes 5 seconds to setup, while you're doing maintenance work on your site.
- * Version: 1.3.1
+ * Version: 1.4.2
  * Author: WPBrigade
- * Author URI: https://www.WPBrigade.com/
+ * Author URI: https://www.WPBrigade.com/?utm_source=ucmm-org&utm_medium=author-url-link
  * Requires at least: 4.0
  * Text Domain: ucmm-wpbrigade
  * Domain Path: /languages
@@ -26,7 +26,7 @@ if ( ! class_exists( 'UCMM_WPBrigade' ) ) :
 		/**
 		 * @var string
 		 */
-		public $version = '1.3.1';
+		public $version = '1.4.2';
 
 		/**
 		 * @var array
@@ -58,6 +58,12 @@ if ( ! class_exists( 'UCMM_WPBrigade' ) ) :
 			$this->define( 'UCMM_WPBRIGADE_MAIN_FILE', 'under-construction-maintenance-mode.php' );
 		}
 
+		/**
+		 * Define all the hooks.
+		 *
+		 * @since 1.0.0
+		 * @version 1.4.0
+		 */
 		public function _hooks() {
 
 			register_activation_hook( __FILE__, array( $this, 'ucmm_activation' ) );
@@ -67,7 +73,7 @@ if ( ! class_exists( 'UCMM_WPBrigade' ) ) :
 			add_action( 'init', array( $this, 'ucmm_set_setting' ) );
 			add_action( 'plugins_loaded', array( $this, 'ucmm_textdomain' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'ucmm_admin_scripts' ) );
-			add_action( 'parse_request', array( $this, 'ucmm_parse_request' ), 10, 1 );
+			add_action( 'wp', array( $this, 'ucmm_parse_request' ), 10, 1 ); 
 			add_action( 'admin_menu', array( $this, 'ucmm_callback_url' ), 99 );
 			// add_action( 'wp_ajax_ucmm_deactivate', array( $this, 'ucmm_deactivate' ) );
 			add_action( 'customize_controls_enqueue_scripts', array( $this, 'ucmm_customizer_js' ) );
@@ -211,59 +217,119 @@ if ( ! class_exists( 'UCMM_WPBrigade' ) ) :
 		}
 	}
 
-	/**
-	* parse_request Fires once all query variables for the current request have been parsed.
-	* @param $wp Current WordPress environment instance (passed by reference)
-	* @since 1.0.0
-	*/
+		/**
+		 * parse_request Fires once all query variables for the current request have been parsed.
+		 *
+		 * @param $wp Current WordPress environment instance (passed by reference)
+		 * @since 1.0.0
+		 * @version 1.4.0
+		 */
 
-	function ucmm_parse_request( $wp ) {
+		function ucmm_parse_request( $wp ) {
 
-		// check to disable the enable page option if schedule endtime is less than current time 
-		global $wp_customize, $current_user, $user_login;
-		$ucmm_settings 		 = get_option( 'ucmm_wpbrigade_setting' );
-		$current_user_role = current( $current_user->roles );
+			// check to disable the enable page option if schedule end-time is less than current time 
+			global $wp_customize, $current_user, $user_login;
+			$ucmm_settings     = get_option( 'ucmm_wpbrigade_setting' );
+			$current_user_role = current( $current_user->roles );
+			$screen            = function_exists( 'get_current_screen' ) ? get_current_screen() : '';
 
-		// Main condition and excluded role/s AND [schedule is disabled] or should be false and time is left
-		if( $this->check_manual() && $this->check_schedule() && $this->is_ucmm_time() && !isset( $ucmm_settings['ucmm-enable'][ 'ucmm-wpbrigade_role_' . $current_user_role ] ) ) {
+			// Exclude UCMM on if edit page is being edited.
+			if ( ! empty( $screen ) && $screen->id == 'edit-post' ) {
+				return;
+			}
 
-			include UCMM_WPBRIGADE_DIR_PATH . 'ucmm-customize.php';
-			exit();
-		}
+			// Exclude UCMM page for the post/s and Pages.
+			if ( $this->ucmm_exclude_post() && ! ( isset( $wp_customize ) && isset( $_GET['watch'] ) && $_GET['watch'] == 'ucmm-customizer' ) ) { 
+				return; 
+			}
 
-		// check_schedule, time is remaining, excluded role/s AND [schedule is disabled] or should be true
-		if( $this->check_schedule() && !isset( $ucmm_settings['ucmm-enable'][ 'ucmm-wpbrigade_role_' . $current_user_role ] ) ) {
+			// Main condition and excluded role/s AND [schedule is disabled] or should be false and time is left
+			if( $this->check_manual() && $this->check_schedule() && $this->is_ucmm_time() && !isset( $ucmm_settings['ucmm-enable'][ 'ucmm-wpbrigade_role_' . $current_user_role ] ) ) {
 
-			if($this->is_ucmm_time()){
 				include UCMM_WPBRIGADE_DIR_PATH . 'ucmm-customize.php';
 				exit();
 			}
-		}
 
-		// check_manual, time is remaining and excluded role/s AND [check_schedule is disabled] or should be false
-		if( $this->check_manual() && $this->check_schedule() && !isset( $ucmm_settings['ucmm-enable'][ 'ucmm-wpbrigade_role_' . $current_user_role ] ) ) {
+			// check_schedule, time is remaining, excluded role/s AND [schedule is disabled] or should be true
+			if( $this->check_schedule() && !isset( $ucmm_settings['ucmm-enable'][ 'ucmm-wpbrigade_role_' . $current_user_role ] ) ) {
 
-			if( $this->is_ucmm_time() ){				
+				if($this->is_ucmm_time()){
+					include UCMM_WPBRIGADE_DIR_PATH . 'ucmm-customize.php';
+					exit();
+				}
+			}
+
+			// check_manual, time is remaining and excluded role/s AND [check_schedule is disabled] or should be false
+			if( $this->check_manual() && $this->check_schedule() && !isset( $ucmm_settings['ucmm-enable'][ 'ucmm-wpbrigade_role_' . $current_user_role ] ) ) {
+
+				if( $this->is_ucmm_time() ){				
+					include UCMM_WPBRIGADE_DIR_PATH . 'ucmm-customize.php';
+					exit();
+				}
+			}
+			
+			// check_manual, check_schedule unchecked and excluded role/s AND [check_schedule is disabled] or should be false
+			if( $this->check_manual() && $this->check_schedule() == false && !isset( $ucmm_settings['ucmm-enable'][ 'ucmm-wpbrigade_role_' . $current_user_role ] ) ) {
+
+				//Go to UCMM page
 				include UCMM_WPBRIGADE_DIR_PATH . 'ucmm-customize.php';
 				exit();
 			}
-		}
-		
-		// check_manual, check_schedule unchecked and excluded role/s AND [check_schedule is disabled] or should be false
-		if( $this->check_manual() && $this->check_schedule() == false && !isset( $ucmm_settings['ucmm-enable'][ 'ucmm-wpbrigade_role_' . $current_user_role ] ) ) {
-			//Go to UCMM page
-			include UCMM_WPBRIGADE_DIR_PATH . 'ucmm-customize.php';
-			exit();
+
+			// For customizer preview.
+			if( isset( $wp_customize ) && isset( $_GET['watch'] ) && $_GET['watch'] == 'ucmm-customizer' ) {
+
+				//Go to UCMM page
+				include UCMM_WPBRIGADE_DIR_PATH . 'ucmm-customize.php';
+				exit();
+			}
+
 		}
 
-		// For customizer preview.
-		if( isset( $wp_customize ) && isset( $_GET['watch'] ) && $_GET['watch'] == 'ucmm-customizer' ) {
-			//Go to UCMM page
-			include UCMM_WPBRIGADE_DIR_PATH . 'ucmm-customize.php';
-			exit();
+		/**
+		 * Disable the UCMM functionality for specific page/s or post/s.
+		 *
+		 * @since 1.4.0
+		 * @return bool true if a pages/posts is excluded | false if pages/posts are not excluded.
+		 */
+		public function ucmm_exclude_post() {
+
+			/**
+			 * Disable the UCMM functionality for specific page/s or post/s.
+			 *
+			 * @param array|string The post ID or Post Slug which you want to remove from UCMM functionality.
+			 * @since 1.4.0
+			 */
+			$exclude_ids = apply_filters( 'ucmm_exclude_post', false );
+
+			if ( ! $exclude_ids ) {
+				return false;
+			}
+
+			global $wp_query;
+
+			$post_obj  = $wp_query->get_queried_object();
+			$post_id   = isset( $post_obj->ID ) ? $post_obj->ID : '';
+			$post_slug = isset( $post_obj->post_name ) ? $post_obj->post_name : '';
+
+			if ( $post_slug && false !== $exclude_ids ) {
+
+				// if array is provided by user.
+				if ( is_array( $exclude_ids ) ) {
+					foreach ( $exclude_ids as $value ) {
+						if ( $post_slug == $value || $post_id == $value ) {
+							return true;
+						}
+					}
+				} else {
+					// if single value is provided by user.
+					if ( $post_slug == $exclude_ids || $post_id == $exclude_ids ) {
+						return true;
+					}
+				}
+			}
 		}
 
-	}
 		/**
 		 * Enqueue jQuery and use wp_localize_script.
 		 *
@@ -410,6 +476,7 @@ if ( ! class_exists( 'UCMM_WPBrigade' ) ) :
 				return $default_value;
 			}
 		}
+
 		/**
 		 * set setting of ucmm.
 		 *
