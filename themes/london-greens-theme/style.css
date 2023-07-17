@@ -1,0 +1,486 @@
+/*
+Theme Name: London Greens
+Author: Jennifer Sadler
+Author URI: jennifer.sadler.ca
+Description: Green Pary site for London Ontario
+Version 1.0
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Montserrat:wght@700&display=swap');
+
+:root {
+  --main-green: #68B74F;
+  --sec-dark-green:#14772F;
+  --sec-light-green:#3D9B35;
+  --sec-yellow:#F1E405;
+  --sec-blue:#52C0DB;
+  --white:#FFFFFF;
+  --blackish:#333333;
+  --lightest-grey:rgba(0, 0, 0, 0.03);
+  --large-padding:40px;
+  --medium-padding:20px;
+  --small-padding:10px;
+
+  --footer-padding:20px;
+  --footer-margin:20px;
+  --footer-height:350px;
+  --header-font:'Montserrat', sans-serif;
+  --main-font:'Lato', sans-serif;
+}
+
+html,body,h1,h2,h3,h4,h5,h6,p,ul,li,a{
+  padding:0;
+  margin:0;
+}
+
+a{
+	color: var(--sec-dark-green);
+}
+
+h1{
+	font-size:26pt;
+}
+h2{
+	font-size:23pt
+}
+h3{
+	font-size:20pt;
+}
+
+h4{
+	font-size:18pt;
+}
+p{
+	font-size:15pt;
+}
+p.greenp-button{
+  width: 98%;
+  margin: 1%;
+
+}
+p.greenp-button a{
+ background-color: var(--sec-dark-green);
+  padding: 20px;
+  display: block;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 5px;
+  border:1px solid transparent;
+
+
+}
+p.greenp-button a:hover{
+	border:1px solid black;
+}
+
+
+html,body{
+  overflow-x: hidden;
+  height: 100%;
+}
+
+footer{
+  background-color:var(--main-green);
+  width: 100%;
+  position:absolute;
+  bottom:0;
+  height: var(--footer-height);
+  padding:var(--footer-padding) 9999rem;
+  margin:var(--footer-margin) -9999rem 0 -9999rem;
+  border-top:5px solid var(--blackish);
+}
+div.holdFooterNav{
+  margin:20px;
+}
+
+div.holdFooterNav ul li a{
+  color:var(--blackish);
+}
+
+div.holdFooterNav ul li a:hover{
+  background-color:var(--lightest-grey);
+}
+
+div.holdFooterNav ul li a:visited{
+  color:black;
+}
+
+div.holdFooterNav ul li{
+  list-style-type: none;
+}
+
+.sr-only {
+  position: absolute !important;
+  clip: rect(1px, 1px, 1px, 1px);
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+div.postText p{
+  margin:var(--small-padding) 0;
+}
+
+h1,h2,h3,h4,h5,h6{
+  font-family: var(--header-font);
+}
+
+p,ul,li,a,span,div{
+  font-family: var(--main-font);
+}
+
+
+div.mainContainer{
+  max-width:1450px;
+  margin:0 auto;
+  min-height: 100%;
+  position: relative;
+	width:100%;
+}
+
+main{
+  display:flex;
+  flex-direction:column;
+  padding-bottom: calc(var(--footer-height) + var(--footer-margin) + var(--footer-padding)*2);
+}
+
+main.homePage{
+  display:flex;
+  
+}
+  header{
+    display:flex;
+    flex-direction:row;
+    background-color:var(--sec-light-green);
+
+  }
+  div.constantHeader{
+    display:flex;
+    flex-grow: 1;
+    flex-direction: column;
+    background-color:var(--main-green);
+    color:var(--blackish);
+
+
+  }
+
+  .mainTitle{
+    padding:var(--medium-padding);
+  }
+
+  header h1{
+    font-size:xx-large;
+  }
+
+  header nav{
+    display:none;
+  }
+
+  button.hamburger{
+    margin:0 auto;
+  }
+
+  div.partyBoxContainer{
+    padding:var(--medium-padding);
+    display:flex;
+    flex-direction: column;
+    gap:var(--medium-padding);
+    border-radius:5px;
+	width: calc(calc(100% - var(--medium-padding)) - var(--medium-padding));
+  }
+
+  div.partyBox{
+    margin:auto;
+    padding:var(--medium-padding);
+    border:5px solid var(--main-green);
+    display:flex;
+    flex-direction:column;
+    background-color:white;
+  }
+
+  figure.green-logo{
+    border-bottom:1px solid var(--main-green);
+    padding-bottom:var(--medium-padding);
+    flex-shrink:1;
+	margin: 0;
+  }
+
+  div.partyBox ul.green-link-list{
+    padding:var(--medium-padding);
+	color: var(--sec-dark-green);
+  }
+
+	ul.green-link-list li a {
+  		color: var(--sec-dark-green);
+	}
+
+  div.ctaContainer h2{
+    margin:var(--medium-padding);
+  }
+
+  div.ctaContainer ul li{
+    list-style-type:none;
+  }
+
+  div.ctaContainer ul li a{
+    display:flex;
+    flex-direction:column;
+
+    background-color:var(--main-green);
+    color:var(--blackish);
+    text-decoration:none;
+    padding:var(--medium-padding);
+    margin:var(--medium-padding);
+    border-radius:5px;
+    border:3px solid transparent;
+  }
+
+  div.ctaContainer ul li a:hover{
+    border:3px solid var(--blackish);
+
+  }
+
+  div.ctaContainer ul li a span.ctaTitle{
+    font-family:var(--header-font);
+    font-size: x-large;
+  }
+
+  div.ctaContainer ul li a span.ctaBlurb{
+
+    font-size: medium;
+  }
+
+  img.postFeaturedImg{
+    width:100%;
+    height:auto;
+  }
+
+
+.attachment-page-header.size-page-header.wp-post-image {
+    width: 100%;
+    height: auto;
+}
+
+  article.postContainer{
+    margin:var(--medium-padding);
+    background-color:var(--lightest-grey);
+  }
+
+  h3.postTitle {
+
+	color: var(--blackish);
+	padding: var(--small-padding) 0 0 0;
+  }
+
+  p.postDate{
+    color:var(--blackish);
+	font-size:small;
+  }
+  div.postText {
+    padding: var(--medium-padding);
+  }
+
+  a.readMore{
+
+    color:var(--sec-light-green);
+  }
+
+  a.readMore:hover{
+    color:var(--sec-dark-green);
+  }
+
+
+
+div.main-nav{
+	width:100%;
+
+}
+
+nav.mainNav{
+  background-color: var(--blackish);
+}
+
+div.main-nav ul li a{
+	color:white;
+	text-decoration:none;
+}
+
+div.main-nav ul li a:hover{
+	text-decoration:underline;
+}
+
+  .menu-closed{
+    display:none;
+  }
+
+  .menu-open{
+    display:block;
+    color:var(--blackish);
+    font-size:x-large;
+  }
+  .menu-open ul {
+    padding:0;
+    margin:var(--medium-padding) 0 0 0;
+
+  }
+  .menu-open li{
+    list-style-type:none;
+    text-align:center;
+  }
+
+  .menu-main-nav-container ul li a{
+	color:var(--blackish);
+    text-decoration: none;
+  }
+
+  .menu-open li a{
+    color:var(--blackish);
+    text-decoration: none;
+    padding:20px;
+    width:calc(100%-40px);
+    display:block;
+
+
+  }
+  .menu-open li:hover{
+    background-color:var(--sec-light-green);
+  }
+
+  .menu-open ul li a.social-link {
+    width:45px;
+    height:45px;
+    background-origin: content-box;
+    background-repeat: no-repeat;
+    margin:0 auto;
+  }
+
+  .menu-open ul li a.nav-facebook {
+    background-image:url(imgs/social-facebook-white.svg);
+
+  }
+
+  .menu-open ul li a.nav-instagram {
+    background-image:url(imgs/social-instagram-white.svg);
+  }
+
+  .menu-open ul li a.nav-twitter {
+    background-image:url(imgs/social-twitter-white.svg);
+  }
+
+/*
+@media only screen and (min-width:900px){
+
+
+  div.partyBoxContainer{
+    flex-direction:row;
+  }
+
+  div.partyBox{
+    flex-grow:0;
+    flex-shrink:0;
+    margin:auto;
+  }
+}
+*/
+
+ .wp-block-columns{
+    display:flex;
+   
+	 clear:both;
+    }
+
+
+@media only screen and (min-width:900px){
+
+  header{
+    background-color:transparent;
+  }
+
+  main{
+
+    flex-direction:row;
+  }
+  main.homePage{
+    display:flex;
+    flex-direction:row;
+  }
+
+	div.constantHeader{
+		width: 100%;
+		background-color:transparent;
+		padding:0;
+    margin:0 var(--medium-padding);
+
+	}
+
+  header nav.mainNav ul{
+    display:flex;
+    flex-direction:row;
+     width:100%;
+  }
+  header nav.mainNav ul li{
+    list-style-type:none;
+    font-size:medium;
+    flex-grow:1;
+  }
+
+  header nav.mainNav ul li a{
+    color:var(--white);
+  }
+
+  nav.mainNav{
+    display:flex;
+	  margin-top: 0;
+	  padding: 10px;
+    align-items: center;
+
+	}
+
+	.mainTitle {
+		background-color: var(--main-green);
+
+		padding:var(--medium-padding);
+	}
+
+	.mainTitle, nav.mainNav {
+		margin-right: -9999rem;
+    margin-left:-9999rem;
+  /* add back negative margin value */
+    padding-left:9999rem;
+    padding-right:9999rem;
+	}
+
+
+  button.hamburger{
+    display:none;
+  }
+  .menu-open ul {
+    padding:0;
+    margin:0;
+
+  }
+  .menu-open li a{
+    padding:0;
+  }
+
+  div.partyBoxContainer{
+    flex-direction:column;
+
+  }
+
+  div.ctaContainer{
+    min-width:450px;
+
+  }
+
+  div.latestNewsContainer{
+    display:flex;
+    flex-direction:column;
+    flex-grow:1;
+
+  }
+}
